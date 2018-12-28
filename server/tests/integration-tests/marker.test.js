@@ -45,7 +45,7 @@ describe('## Marker APIs', () => {
 
   let jwtToken
 
-  describe('# GET /v1/markers', () => {
+  describe('# /v1/markers', () => {
 
     it('should get valid JWT token', (done) => {
       request(app)
@@ -112,6 +112,31 @@ describe('## Marker APIs', () => {
           })
           .catch(done)
       })
+
+      it('should get one specific marker', (done) => {
+        request(app)
+          .get('/v1/markers?count=1')
+          .expect(httpStatus.OK)
+          .then((res) => {
+            expect(res.body._id).to.equal("Gaius Caesar")
+            expect(res.body.year).to.equal(-20)
+            done()
+          })
+          .catch(done)
+      })
+
+      it('should get markes for specific types and count', (done) => {
+        request(app)
+          .get('/v1/markers?types=a,ar,at,b,c,ca,cp,e,m,op,p,r,s,si&year=648&count=3000')
+          .expect(httpStatus.OK)
+          .then((res) => {
+            console.log(res.body)
+            expect(res.body._id).to.equal("Gaius Caesar")
+            expect(res.body.year).to.equal(-20)
+            done()
+          })
+          .catch(done)
+      })      
     })
 
     describe('# Put /v1/markers', () => {
@@ -130,7 +155,7 @@ describe('## Marker APIs', () => {
 
       it('should update a marker', (done) => {
         updateMarker.type = 'aui'
-        
+
         request(app)
           .put(`/v1/markers/${updateMarker._id}`)
           .set('Authorization', jwtToken)
