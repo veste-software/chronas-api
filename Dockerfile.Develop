@@ -7,6 +7,11 @@ WORKDIR /app
 # ---- Dependencies ----
 FROM base AS dependencies  
 COPY package.json ./
+
+#update commit and build id
+RUN npm install appversion -g \
+	&& apv init
+
 # install app dependencies including 'devDependencies'
 RUN npm install
 # ---- Copy Files/Build ----
@@ -28,7 +33,7 @@ WORKDIR /app
 
 #  --- add env variables ---
 ENV NODE_ENV=production
-ENV MONGO_HOST=mongodb://localhost/chronas-api
+ENV MONGO_HOST=mongodb://chronas:qbGVcUmnGDvZJeSicDPpJ2Xtcb9IxbwkKTkusIWpPfVDBZ2KIaZMJCN2dqF9stDAHEZq9kG2ci9w7GFxgzWFzw==@chronas.documents.azure.com:10255/chronas-api?ssl=true
 ENV MONGO_PORT=27017
 ENV MAILGUN_KEY=placeholder
 ENV PORT=80
