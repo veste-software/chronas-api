@@ -17,14 +17,14 @@ router.route('/')
   /** PUT /v1/areas/ - Update area */
   .put(
     expressJwt({ secret: config.jwtSecret, requestProperty: 'auth' }),
-    checkPrivilege.checkPrivilege(1),
+    checkPrivilege.checkPrivilege(3),
     areaCtrl.updateMany,
     revisionCtrl.addUpdateManyRevision)
 
   /** POST /v1/areas - Create new area */
   .post(
     expressJwt({ secret: config.jwtSecret, requestProperty: 'auth' }),
-    // checkPrivilege.checkPrivilege(5),
+    checkPrivilege.checkPrivilege(3),
     // revisionCtrl.addCreateRevision,
     // validate(paramValidation.createArea),
     areaCtrl.create)
@@ -64,7 +64,7 @@ router.route('/:areaId')
   /** PUT /v1/areas/:areaId - Update area */
   .put(
     expressJwt({ secret: config.jwtSecret, requestProperty: 'auth' }),
-    checkPrivilege.checkPrivilege(1),
+    checkPrivilege.checkPrivilege(3),
     revisionCtrl.addUpdateRevision,
     areaCtrl.update)
 
